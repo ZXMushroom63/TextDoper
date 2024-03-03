@@ -18,6 +18,7 @@ It:
 ### Capabilities (As of March 3, 2024)
 Bypass:
 - Winston AI
+- QuillBot AI Detector
 - Scribbr AI detector
 - ZeroGPT
 - Writer AI Detector
