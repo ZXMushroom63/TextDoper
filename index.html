@@ -1,0 +1,60 @@
+<h2>Text Doper</h2>
+<div>
+  <input type="range" min=0 max=1 step=0.1 value=0.6 data-zwsp oninput="dope()">
+  <label>Zero Width Space Threshold</label>
+  <br>
+  <input type="range" min=0 max=1 step=0.1 value=0.4 data-homo oninput="dope()">
+  <label>Homoglyph Threshold</label>
+  <br>
+  <input type="range" min=0 max=1 step=0.1 value=1.0 data-space oninput="dope()">
+  <label>Space Threshold</label>
+  <br>
+  <textarea class="before" oninput="dope()" placeholder="AI generated text here..." label="000"></textarea>
+  <textarea class="after" readonly placeholder="Output text here" label="000"></textarea>
+  <p></p>
+</div>
+<style>
+  textarea {
+    width: 40vw;
+    resize: none;
+    height: 100%;
+  }
+
+  div {
+    height: 50vh;
+  }
+</style>
+<script>
+  window.onerror = (e) => {
+    alert(e)
+  }
+</script>
+<script>
+  function dope() {
+    var out = "";
+    var threshold = document.querySelector("[data-zwsp]").value;
+    var homoglyphThreshold = document.querySelector("[data-homo]").value;
+    var spaceThreshold = document.querySelector("[data-space]").value;
+    var dopechars = ["\u200c", "\u200d", "\uFEFF"];
+    var dopeCount = 0;
+    var spacechars = ["\u2008", "\u2007"];
+    var arr = document.querySelector(".before").value.split("");
+    arr.forEach(char => {
+      if (Math.random() > homoglyphThreshold) {
+        out += char.replace(".", "\u002e").replace("K", "\u212A").replace(":", "\u2236").replace("A", "\u0410").replace("a", "\u0430").replaceAll("M", "\u041C").replaceAll("X", "\u0425").replaceAll("x", "\u0445").replaceAll("E", "\u0415").replaceAll("e", "\u0435").replaceAll("O", "\u041E").replaceAll("o", "\u043E");
+        dopeCount++;
+      } else if (Math.random() > spaceThreshold) {
+        out += char.replace(" ", spacechars[Math.floor(Math.random() * spacechars.length)]);
+        dopeCount++;
+      } else {
+        out += char;
+      }
+      if (Math.random() > threshold) {
+        out += dopechars[Math.floor(Math.random() * dopechars.length)];
+        dopeCount++;
+      }
+    });
+    document.querySelector(".after").value = out;
+    document.querySelector("p").innerText = "Inserted " + dopeCount + " doping characters.";
+  }
+</script>
